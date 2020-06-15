@@ -53,7 +53,20 @@ app.get("/blogs",function(req,res){
 app.get("/blogs/new",function(req,res){
   res.render('NewPost');
 })
+
+app.post("/blogs",function(req,res){
+  var title=req.body.blogtitle;
+  var image=req.body.blogimage;
+  var body=req.body.blogbody;
+  var obj={title:title,image:image,body:body,created:date()};
+  console.log(body);
+  console.log(obj);
+  dbs.collection('Blogs').insertOne(obj,function(err,r){
+    if(err) res.redirect("/blogs/new");
+    res.redirect("/blogs");
+  });
   
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

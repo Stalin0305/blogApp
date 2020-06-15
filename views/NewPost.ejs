@@ -1,5 +1,27 @@
 <%- include('partials/header')%>
-
+<link rel="stylesheet" href="/stylesheets/style.css">
+<div class="centerForm">
+    <form action="/blogs" method="POST">
+        <h2 class="formDiv">New Blog</h2>
+        <div class="form-group formDiv">
+            <label for="titleblog">Enter the name of the blog</label>
+            <input type="text" class="form-control" id="titleblog" name="blogtitle" required placeholder="Title">
+        </div>
+        <div class="form-group formDiv">
+            <label for="imageblog">Add the image url</label>
+            <input type="text" class="form-control" id="imageblog" name="blogimage" required placeholder="Image url">
+        </div>
+        <div class="form-group formDiv">
+            <label for="bodyblog">Enter the description</label><br>
+            <!-- <input type="text" class="form-control" name="blogbody" id="bodyblog" maxlength="300"> -->
+            <textarea name="blogbody" id="bodyblog" class="form-control" cols="30" required rows="7"></textarea>
+        </div>
+        <div class="form-group formDiv">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        
+    </form>
+</div>
 
 
 <%- include('partials/footer') %>
