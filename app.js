@@ -4,21 +4,21 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser=require('body-parser');
-var date=require('get-date');
+var date=require('date-time');
 var dbs;
 var MongoClient=require('mongodb').MongoClient;
-MongoClient.connect("mongodb://localhost:27017/",function(err,db){
+MongoClient.connect("mongodb://localhost:27017/", {useNewUrlParser: true, useUnifiedTopology: true},function(err,db){
   if(err) console.log("database connection error");
   dbs=db.db('BlogApp');
-  dbs.collection('Blogs').insertOne({ title: "test blog 1", image: "https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg", body: "this is a test blog description", created: date(true) }, function (err, r) {
-    if (err) next(err);
-    console.log(r);
-  }); 
+  // dbs.collection('Blogs').insertOne({ title: "test blog 1", image: "https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg", body: "this is a test blog description", created: date()}, function (err, r) {
+  //   if (err) next(err);
+  //   console.log(r);
+  // }); 
   console.log('Database connected');
-  console.log(dbs);
+  // console.log(dbs);
 });
 
-console.log(dbs);
+// console.log(dbs);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -38,15 +38,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 
-
-// app.get('/',function(req,res,next){
-//   dbs.collection('Blogs').insertOne({ title: "test blog", image: "https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg", body: "this is a test blog description", created: date(true) },function(err,r){
-//     if(err) next(err);
-//     console.log(r);
-//   }); 
-// });
-
 //ROUTES
+app.get("/",function(req,res){
+  res.redirect("/blogs");
+})
+
+app.get("/blogs",function(req,res){
+  dbs.collection('Blogs').find({}).toArray(function(err,result){
+    if(err) console.log(err);
+    res.render('index', { blog: result });
+  });
+});
+
+app.get("/blogs/new",function(req,res){
+  res.render('NewPost');
+})
+  
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
