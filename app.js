@@ -7,6 +7,7 @@ var bodyParser=require('body-parser');
 var date=require('date-time');
 var dbs;
 var MongoClient=require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
 MongoClient.connect("mongodb://localhost:27017/", {useNewUrlParser: true, useUnifiedTopology: true},function(err,db){
   if(err) console.log("database connection error");
   dbs=db.db('BlogApp');
@@ -66,6 +67,20 @@ app.post("/blogs",function(req,res){
     res.redirect("/blogs");
   });
   
+});
+
+app.get("/blogs/:id",function(req,res){
+  var objid=req.params.id;
+  console.log(objid);
+  dbs.collection('Blogs').find({_id:ObjectId(objid)}).toArray(function(e,r){
+    if(e) console.log(e);
+    console.log(r);
+    console.log(r.title);
+    // res.render("show",{ blog: r});
+    res.render('show',{bl:r});
+    // res.render("NewPost");
+    // res.render('index');
+  });
 });
 
 // catch 404 and forward to error handler

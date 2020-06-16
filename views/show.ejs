@@ -1,0 +1,13 @@
+<%- include('partials/header')%>
+
+
+<%bl.forEach(function(bl){%>
+<div class="container">
+    <h1><%=bl.title%></h1>
+    <img src="<%=bl.image%>">
+    <p><%=bl.body%></p>
+    <p><%=bl.created%></p>
+</div>
+<%});%>
+
+<%- include('partials/footer') %>

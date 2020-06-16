@@ -1,13 +1,16 @@
 <%- include('partials/header')%>
     <!-- Style sheet -->
     <!-- <link rel="stylesheet" href="/css/index.css"> -->
-        
+    <link rel="stylesheet" href="/stylesheets/style.css">
     <% blog.forEach(function(blog){ %>
         <div>
             <h2> <%=blog.title%> </h2>
-            <img src="<%=blog.img%>" alt="image">
+            <div class="imgDiv">
+                <img src="<%=blog.image%>" alt="image" class="img-thumbnail">
+            </div>
             <h3> <%=blog.body%> </h3>
             <h3> <%=blog.created %> </h3>
+            <a href="/blogs/<%=blog._id%>" >Read more</a>
         </div>
     <% }); %>
 
